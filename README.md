@@ -10,9 +10,9 @@ This program uses several settings to record 'Vibration Periods' to a SQLite dat
  - MinimumPeriod: The minimum duration in milliseconds to record as a Vibration Period.
  - PollingFrequency: The number of milliseconds between polling the sensor state.
 
-This is NOT designed to record each individual vibration that the SW-420 records - and is also not designed to record single very short vibrations - rather it is designed to record something like a motor running where the SW-420 is may switch between vibrating/not-vibrating multiple times over the motor's run. Once the program receives a vibration (how often it checks is set with the Polling Frequency) it will consider the vibration ongoing as long as it receives another vibration within the Minimum Period (even if every check of the sensor does not register as vibrating).
+This is NOT designed to record each individual vibration that the SW-420 records - and is also not designed to record single very short vibrations - rather it is designed to record something like a motor running where the SW-420 may switch between vibrating/not-vibrating multiple times over the motor's run. Once the program receives a vibration (how often it checks is set with the Polling Frequency) it will consider the vibration ongoing as long as it receives another vibration within the Minimum Period (even if every check of the sensor does not register as vibrating).
 
-Vibration Periods are written to the database and can be retrieved via the web api.
+Vibration Periods (and program errors) are written to the database and can be retrieved via the web api.
 
 ### Command Line Arguments
 
@@ -100,7 +100,7 @@ Even this fairly simple program owes an incredible debt to the amazing open sour
 **Tools:**
  - [Visual Studio IDE](https://visualstudio.microsoft.com/), [.NET Core (Linux, macOS, and Windows)](https://dotnet.microsoft.com/download/dotnet-core)
  - [ReSharper: The Visual Studio Extension for .NET Developers by JetBrains](https://www.jetbrains.com/resharper/)
- - [GitHub Copilot · Your AI pair programmer · GitHub](https://github.com/features/copilot)
+ - [GitHub Copilot Â· Your AI pair programmer Â· GitHub](https://github.com/features/copilot)
  - [PowerShell](https://github.com/PowerShell/PowerShell)
  - [AutoHotkey](https://www.autohotkey.com/)
  - [Compact-Log-Format-Viewer: A cross platform tool to read & query JSON aka CLEF log files created by Serilog](https://github.com/warrenbuckley/Compact-Log-Format-Viewer)
