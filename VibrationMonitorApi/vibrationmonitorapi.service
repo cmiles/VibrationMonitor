@@ -1,0 +1,12 @@
+[Unit] 
+Description=Vibration Monitor API
+
+[Service]
+ExecStart=/home/[Your Directory Here]/VibrationMonitor/VibrationMonitorApi/VibrationMonitorApi
+WorkingDirectory=/home/[Your Directory Here]/VibrationMonitor/VibrationMonitorApi/
+Restart=always
+RestartSec=10
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target
