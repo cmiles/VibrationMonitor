@@ -4,6 +4,12 @@ using VibrationMonitorUtilities;
 
 namespace VibrationMonitor;
 
+/// <summary>
+/// This class handles Vibration Processing dealing with Minimum Period Lengths and Database Writes.
+/// The expectation is that this class will be used from a loop that reads the sensor data - if used
+/// in another context you will have to be more careful about feeding the class data. Call CreateInstance
+/// to get a new instance.
+/// </summary>
 public class VibrationProcessor
 {
     public VibrationPeriod? CurrentVibrationPeriod { get; set; }

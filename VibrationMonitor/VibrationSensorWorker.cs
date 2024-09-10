@@ -5,6 +5,11 @@ using VibrationMonitorUtilities;
 
 namespace VibrationMonitor;
 
+/// <summary>
+/// This is the main loop - this will do some setup work and then poll the sensor for changes
+/// at a frequency defined by PollingFrequencyInMilliseconds. The loop reads sensor data and
+/// calls an instance of the VibrationProcessor to handle the data.
+/// </summary>
 public class VibrationSensorWorker : BackgroundService
 {
     public int GpioPin { get; set; } = 17;
