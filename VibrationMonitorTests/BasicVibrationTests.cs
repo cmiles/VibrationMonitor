@@ -21,6 +21,7 @@ public class BasicVibrationTests
 
         Processor = await VibrationProcessor.CreateInstance(LocationTools.DataDbFilename());
         Processor.MinimumPeriodInMilliseconds = 3000;
+        Processor.VibrationDescription = "Test Vibration";
     }
 
     [Test]

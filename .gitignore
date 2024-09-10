@@ -398,3 +398,5 @@ FodyWeavers.xsd
 *.sln.iml
 /VibrationMonitor/Properties/launchSettings.json
 /VibrationMonitorApi/Properties/launchSettings.json
+/VibrationMonitorApi/VibrationMonitorApi.args.json
+/VibrationMonitor/VibrationMonitor.args.json

@@ -24,9 +24,11 @@ Vibration Periods (and program errors) are written to the database and can be re
 
 ### Pi Setup
 
-There is a PublishAll.ps1 script in the root directory that will publish both the VibrationMonitor and VibrationMonitorApi projects for the Raspberry Pi to M:\VibrationMonitor using the FolderProfile.pubxml files in the VibrationMonitor\Properties\PublishProfiles and VibrationMonitorApi\Properties\PublishProfiles. You can either map a directory to M: or edit the script and the FolderProfile.pubxml files to point to another directory.
+There is a PublishAll.ps1 script in the root directory that will publish both the VibrationMonitor and VibrationMonitorApi projects for the Raspberry Pi to M:\VibrationMonitorProject using the FolderProfile.pubxml files in the VibrationMonitor\Properties\PublishProfiles and VibrationMonitorApi\Properties\PublishProfiles. You can either map a directory to M: or edit the script and the FolderProfile.pubxml files to point to another directory.
 
 Setting up and securing a Raspberry Pi is beyond the scope of this readme - suggested below are some basic steps to get the program up and running on a Raspberry Pi.
+
+ - I've tested this code on a Raspberry Pi Zero 2 WH, 3 A+ and 3 B+ with the Raspberry Pi OS Lite (64-bit) OS. The publish profiles are setup to publish self contained, single file, executables for linux-arm64. These settings will not produce impressively small files, but they will run without needing any additional packages installed on the Pi.
 
  - Run updates
 	```
@@ -39,13 +41,15 @@ Setting up and securing a Raspberry Pi is beyond the scope of this readme - sugg
 	sudo apt-get install unattended-upgrades
 	sudo dpkg-reconfigure --priority=low unattended-upgrades
 	```
+ 
+ - Copy the M:\VibrationMonitorProject directory (or the directory where you published the project to) to your home directory on the Pi
 
  - Run the Vibration Monitor and web API as a service: 
 	- Edit the vibrationmonitor.service replacing [Your Directory Here] and optionally adding program arguments, copy it to /etc/systemd/system/, start and follow the service to check for any errors:
 	```
-	chmod +x ./VibrationMonitor/VibrationMonitor/VibrationMonitor
-	nano VibrationMonitor/VibrationMonitor/vibrationmonitor.service
-	sudo cp VibrationMonitor/VibrationMonitor/vibrationmonitor.service /etc/systemd/system/
+	chmod +x ./VibrationMonitorProject/VibrationMonitor/VibrationMonitor
+	nano VibrationMonitorProject/VibrationMonitor/vibrationmonitor.service
+	sudo cp VibrationMonitorProject/VibrationMonitor/vibrationmonitor.service /etc/systemd/system/
 	sudo systemctl daemon-reload
  	sudo systemctl enable vibrationmonitor --now
 	journalctl -u vibrationmonitor -f
@@ -53,13 +57,19 @@ Setting up and securing a Raspberry Pi is beyond the scope of this readme - sugg
 
 	- Edit the vibrationmonitorapi.service replacing [Your Directory Here] and optionally specifying the port for the service (the default is 7171), copy it to /etc/systemd/system/, start and follow the service to check for any errors:
 	```
-	chmod +x ./VibrationMonitor/VibrationMonitorApi/VibrationMonitorApi
-	nano VibrationMonitor/VibrationMonitorApi/vibrationmonitorapi.service
-	sudo cp VibrationMonitor/VibrationMonitorApi/vibrationmonitorapi.service /etc/systemd/system/
+	chmod +x ./VibrationMonitorProject/VibrationMonitorApi/VibrationMonitorApi
+	nano VibrationMonitorProject/VibrationMonitorApi/vibrationmonitorapi.service
+	sudo cp VibrationMonitorProject/VibrationMonitorApi/vibrationmonitorapi.service /etc/systemd/system/
 	sudo systemctl daemon-reload
  	sudo systemctl enable vibrationmonitorapi --now
 	journalctl -u vibrationmonitorapi -f
 	```
+
+To setup the SW420 sensor setup:
+ - SSH to the Pi and run 'pinout' to see a diagram of the GPIO pins or visit [Raspberry Pi GPIO Pinout](https://pinout.xyz/)
+ - Connect the SW420 VCC pin to a 3.3v pin on the Pi
+ - Connect the SW420 GND pin to a GND pin on the Pi
+ - Connect the SW420 DO pin to a GPIO pin on the Pi (the default is 17 - you can change this with the -p parameter when you start the VibrationMonitor)
 
 ### Web API
 

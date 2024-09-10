@@ -2,8 +2,8 @@
 Description=Vibration Monitor API
 
 [Service]
-ExecStart=/home/[Your Directory Here]/VibrationMonitor/VibrationMonitorApi/VibrationMonitorApi
-WorkingDirectory=/home/[Your Directory Here]/VibrationMonitor/VibrationMonitorApi/
+ExecStart=/home/[Your Directory Here]/VibrationMonitorProject/VibrationMonitorApi/VibrationMonitorApi
+WorkingDirectory=/home/[Your Directory Here]/VibrationMonitorProject/VibrationMonitorApi/
 Restart=always
 RestartSec=10
 KillSignal=SIGINT

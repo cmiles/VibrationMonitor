@@ -2,8 +2,8 @@
 Description=Vibration Monitor
 
 [Service]
-ExecStart=/home/[Your Directory Here]/VibrationMonitor/VibrationMonitor/VibrationMonitor
-WorkingDirectory=/home/[Your Directory Here]/VibrationMonitor/VibrationMonitor/
+ExecStart=/home/[Your Directory Here]/VibrationMonitorProject/VibrationMonitor/VibrationMonitor
+WorkingDirectory=/home/[Your Directory Here]/VibrationMonitorProject/VibrationMonitor/
 Restart=always
 RestartSec=10
 KillSignal=SIGINT
