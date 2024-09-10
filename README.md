@@ -16,11 +16,11 @@ Vibration Periods (and program errors) are written to the database and can be re
 
 ### Command Line Arguments
 
--d, --description         (Default: Vibration Detected) A short description to associate with the Vibration entries in the database.
--p, --gpiopin             (Default: 17) The gpio pin the SW420 Sensor is connected to.
--m, --minimumperiod       (Default: 2000) The minimum duration in milliseconds to record as a Vibration Entry.
--f, --pollingfrequency    (Default: 500) The number of milliseconds between polling the sensor state
---help                    Display this help screen.
+  - -d, --description         (Default: Vibration Detected) A short description to associate with the Vibration entries in the database.
+  - -p, --gpiopin             (Default: 17) The gpio pin the SW420 Sensor is connected to.
+  - -m, --minimumperiod       (Default: 2000) The minimum duration in milliseconds to record as a Vibration Entry.
+  - -f, --pollingfrequency    (Default: 500) The number of milliseconds between polling the sensor state
+  - --help                    Display this help screen.
 
 ### Pi Setup
 
