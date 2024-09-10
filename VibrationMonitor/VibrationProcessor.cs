@@ -1,5 +1,6 @@
 ﻿using Serilog;
 using VibrationMonitorDb;
+using VibrationMonitorUtilities;
 
 namespace VibrationMonitor;
 
@@ -26,7 +27,9 @@ public class VibrationProcessor
             try
             {
                 LastVibrationTime = changeOn;
-                CurrentVibrationPeriod = new VibrationPeriod { StartedOn = LastVibrationTime.Value, Description = VibrationDescription};
+                Log.Verbose("Starting new Vibration Period");
+                CurrentVibrationPeriod = new VibrationPeriod
+                    { StartedOn = LastVibrationTime.Value, Description = VibrationDescription };
             }
             catch (Exception e)
             {
@@ -41,17 +44,27 @@ public class VibrationProcessor
         {
             LastVibrationTime = changeOn;
             if (CurrentVibrationPeriod.Id < 1 &&
-                LastVibrationTime.Value.Subtract(CurrentVibrationPeriod.StartedOn).TotalMilliseconds >= MinimumPeriodInMilliseconds)
-                CurrentVibrationPeriod = await VibrationMonitorDbQuery.NewGreyWaterPumpVibrationPeriod(CurrentVibrationPeriod, DbFileName);
+                LastVibrationTime.Value.Subtract(CurrentVibrationPeriod.StartedOn).TotalMilliseconds >=
+                MinimumPeriodInMilliseconds)
+                CurrentVibrationPeriod =
+                    await VibrationMonitorDbQuery.NewGreyWaterPumpVibrationPeriod(CurrentVibrationPeriod, DbFileName);
 
             return;
         }
 
         //Vibration Ended, but we have an invalid state - reset state and continue
-        if (!isVibrating && (CurrentVibrationPeriod is null ||  LastVibrationTime == null))
+        if (!isVibrating && (CurrentVibrationPeriod is null || LastVibrationTime == null))
         {
+            Log.ForContext(nameof(LastVibrationTime), LastVibrationTime.SafeObjectDump())
+                .ForContext(nameof(CurrentVibrationPeriod), CurrentVibrationPeriod.SafeObjectDump())
+                .ForContext("comment",
+                    "This state is not logged as an error since it can be easily recovered from, but it is logged because it shouldn't occur...")
+                .Warning(
+                    "Invalid State: Vibration ended but LastVibrationTime is Null {0} or CurrentVibrationPeriod is Null {1}",
+                    LastVibrationTime is null, CurrentVibrationPeriod is null);
             LastVibrationTime = null;
             CurrentVibrationPeriod = null;
+
             return;
         }
 
@@ -64,11 +77,14 @@ public class VibrationProcessor
         //Vibration Period Ended
         if (!isVibrating)
             if (CurrentVibrationPeriod != null)
-                if (LastVibrationTime!.Value.Subtract(CurrentVibrationPeriod.StartedOn).TotalMilliseconds <= MinimumPeriodInMilliseconds)
+                if (LastVibrationTime!.Value.Subtract(CurrentVibrationPeriod.StartedOn).TotalMilliseconds <=
+                    MinimumPeriodInMilliseconds)
                 {
+                    Log.ForContext(nameof(CurrentVibrationPeriod), CurrentVibrationPeriod.SafeObjectDump())
+                        .ForContext(nameof(LastVibrationTime), LastVibrationTime.SafeObjectDump())
+                        .Verbose("Vibration Period too short - Ignoring");
                     LastVibrationTime = null;
                     CurrentVibrationPeriod = null;
-                    return;
                 }
                 else
                 {
