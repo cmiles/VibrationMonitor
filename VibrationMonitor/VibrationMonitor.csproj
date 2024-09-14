@@ -21,6 +21,13 @@
     </AssemblyAttribute>
   </ItemGroup>
 
+  <PropertyGroup>
+    <GitVersion>false</GitVersion>
+    <Version>$([System.DateTime]::Now.ToString("yyyy.M.d.Hmm"))</Version>
+    <AssemblyVersion>$([System.DateTime]::Now.ToString("yyyy.M.d.Hmm"))</AssemblyVersion>
+    <FileVersion>$([System.DateTime]::Now.ToString("yyyy.M.d.Hmm"))</FileVersion>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\VibrationMonitorDb\VibrationMonitorDb.csproj" />
     <ProjectReference Include="..\VibrationMonitorUtilities\VibrationMonitorUtilities.csproj" />

@@ -12,7 +12,7 @@ public class BasicVibrationTests
     public VibrationProcessor Processor { get; set; }
     public DateTime ReferenceDateTime { get; set; }
 
-    [SetUp]
+    [OneTimeSetUp]
     public async Task Setup()
     {
         LogTools.StandardStaticLoggerForProgramDirectory("PiSlicedDayPhotos");
